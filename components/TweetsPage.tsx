@@ -13,13 +13,13 @@ export default function TweetsPage() {
   const [isPosting, setIsPosting] = useState(false);
   const { toast } = useToast();
 
-  const generateTweet = async (prompt: string) => {
+  const generateTweet = async (prompt: string, count: number) => {
     setIsGenerating(true);
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ prompt, count }),
       });
 
       const data = await response.json();

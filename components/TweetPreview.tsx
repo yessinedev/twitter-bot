@@ -18,7 +18,7 @@ export function TweetPreview({
     <div className="space-y-4">
       <div className="p-4 rounded-lg bg-muted">{content}</div>
 
-      <Button
+      {/* <Button
         onClick={onPost}
         disabled={isPosting}
         variant="secondary"
@@ -26,7 +26,7 @@ export function TweetPreview({
       >
         <Send className="w-4 h-4 mr-2" />
         {isPosting ? "Posting..." : "Post Tweet"}
-      </Button>
+      </Button> */}
     </div>
   );
 }

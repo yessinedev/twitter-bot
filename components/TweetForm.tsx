@@ -4,26 +4,29 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Sparkles } from "lucide-react";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 
 interface TweetFormProps {
-  onGenerate: (prompt: string) => Promise<void>;
+  onGenerate: (prompt: string, count: number) => Promise<void>;
   isGenerating: boolean;
 }
 
 export function TweetForm({ onGenerate, isGenerating }: TweetFormProps) {
   const [prompt, setPrompt] = useState("");
+  const [count, setCount] = useState(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await onGenerate(prompt);
+    await onGenerate(prompt, count);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="prompt" className="block text-sm font-medium mb-2">
+        <Label htmlFor="prompt" className="block text-sm font-medium mb-2">
           What would you like to tweets about?
-        </label>
+        </Label>
         <Textarea
           id="prompt"
           placeholder="Enter a topic or idea for your tweet..."
@@ -31,6 +34,17 @@ export function TweetForm({ onGenerate, isGenerating }: TweetFormProps) {
           onChange={(e) => setPrompt(e.target.value)}
           className="min-h-[100px]"
           required
+        />
+      </div>
+      <div>
+        <Label htmlFor="count" className="block text-sm font-medium mb-2">
+          Tweets Number
+        </Label>
+        <Input
+          type="number"
+          value={count}
+          id="count"
+          onChange={(e) => setCount(parseInt(e.target.value))}
         />
       </div>
 

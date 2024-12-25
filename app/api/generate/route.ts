@@ -10,18 +10,17 @@ export async function POST(req: NextRequest) {
     // Retrieve the data from the request body
     const data = await req.json();
     const prompt = data.prompt;
+    const count = data.count;
 
     // Adjust the prompt to instruct the model to generate multiple tweets
     const result = await model.generateContent(
-      `Generate 5 engaging Twitter posts based on the following subjects: "${prompt}". 
-      Each post should be concise (under 280 characters), include relevant hashtags, 
-      and be formatted as a numbered list: 
-      1. Tweet one...
-      2. Tweet two...
-      3. Tweet three...
-      4. Tweet four...
-      5. Tweet five...
-      Do not include any links or a placeholder to a link.`
+      `Generate ${count} engaging Twitter posts based on the following subjects: "${prompt}". 
+      Each post should:
+    - Be concise (under 280 characters)
+    - Use an engaging tone (informative, humorous, or inspiring).
+    - Include relevant hashtags
+    - Be formatted as a numbered list (1 to ${count})
+    - Avoid links or placeholders for links.`
     );
 
     const response = result.response;
