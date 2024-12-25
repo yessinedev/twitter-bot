@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//create a new model for a tweet with the following fields: id, content, scheduledDate, scheduledTime, status
+model Tweet {
+  id            Int      @id @default(autoincrement())
+  content       String @db.VarChar(300)
+  // scheduledDate DateTime @default(null)
+  // scheduledTime DateTime
+  status    Status   @default(DRAFT)
+}
+
+//create a new enum for the status field with the following values: DRAFT, SCHEDULED, POSTED
+enum Status {
+  DRAFT
+  SCHEDULED
+  POSTED
+}

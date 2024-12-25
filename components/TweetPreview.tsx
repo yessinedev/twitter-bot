@@ -1,32 +1,35 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Send } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface TweetPreviewProps {
   content: string;
-  onPost: () => Promise<void>;
-  isPosting: boolean;
+  isChecked: boolean;
+  onCheckChange: (checked: boolean) => void;
 }
 
 export function TweetPreview({
   content,
-  onPost,
-  isPosting,
+  isChecked,
+  onCheckChange,
 }: TweetPreviewProps) {
   return (
-    <div className="space-y-4">
-      <div className="p-4 rounded-lg bg-muted">{content}</div>
-
-      {/* <Button
-        onClick={onPost}
-        disabled={isPosting}
-        variant="secondary"
-        className="w-full"
-      >
-        <Send className="w-4 h-4 mr-2" />
-        {isPosting ? "Posting..." : "Post Tweet"}
-      </Button> */}
+    <div className="space-y-4 flex items-start">
+      <Checkbox
+        id={`tweet-${content}`}
+        checked={isChecked}
+        onCheckedChange={onCheckChange}
+        className="mt-1 mr-2"
+      />
+      <div className="flex-grow">
+        <label
+          htmlFor={`tweet-${content}`}
+          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        >
+          <div className="p-4 rounded-lg bg-muted">{content}</div>
+        </label>
+      </div>
     </div>
   );
 }
+
