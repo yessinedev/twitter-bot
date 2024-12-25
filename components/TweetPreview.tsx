@@ -9,17 +9,14 @@ interface TweetPreviewProps {
   isPosting: boolean;
 }
 
-export function TweetPreview({ content, onPost, isPosting }: TweetPreviewProps) {
+export function TweetPreview({
+  content,
+  onPost,
+  isPosting,
+}: TweetPreviewProps) {
   return (
     <div className="space-y-4">
-      <div>
-        <label className="block text-sm font-medium mb-2">
-          Generated Tweet
-        </label>
-        <div className="p-4 rounded-lg bg-muted">
-          {content}
-        </div>
-      </div>
+      <div className="p-4 rounded-lg bg-muted">{content}</div>
 
       <Button
         onClick={onPost}

@@ -8,7 +8,7 @@ import { TweetForm } from "./TweetForm";
 import { TweetPreview } from "./TweetPreview";
 
 export default function TweetsPage() {
-  const [generatedContent, setGeneratedContent] = useState("");
+  const [generatedContent, setGeneratedContent] = useState([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isPosting, setIsPosting] = useState(false);
   const { toast } = useToast();
@@ -21,20 +21,20 @@ export default function TweetsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
       });
-      
+
       const data = await response.json();
-      
+
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to generate tweet');
+        throw new Error(data.error || "Failed to generate tweet");
       }
-      console.log(data.output)
-      setGeneratedContent(data.output);
+      console.log(data.tweets);
+      setGeneratedContent(data.tweets);
       toast({
         title: "Tweet generated!",
         description: "Your tweet content has been generated successfully.",
       });
     } catch (error: any) {
-      console.error('Generate Tweet Error:', error);
+      console.error("Generate Tweet Error:", error);
       toast({
         title: "Error",
         description: error.message || "Failed to generate tweet content.",
@@ -45,22 +45,22 @@ export default function TweetsPage() {
     }
   };
 
-  const postTweet = async () => {
+  const postTweet = async (tweet: string) => {
     if (!generatedContent) return;
-    
+
     setIsPosting(true);
     try {
       const response = await fetch("/api/tweet", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: generatedContent }),
+        body: JSON.stringify({ content: tweet }),
       });
-      
+
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || 'Failed to post tweet');
+        throw new Error(data.error || "Failed to post tweet");
       }
-      
+
       toast({
         title: "Success!",
         description: "Your tweet has been posted.",
@@ -85,18 +85,16 @@ export default function TweetsPage() {
         </div>
 
         <div className="space-y-6">
-          <TweetForm 
-            onGenerate={generateTweet}
-            isGenerating={isGenerating}
-          />
+          <TweetForm onGenerate={generateTweet} isGenerating={isGenerating} />
 
-          {generatedContent && (
+          {generatedContent?.map((tweet, index) => (
             <TweetPreview
-              content={generatedContent}
-              onPost={postTweet}
+            key={index}
+              content={tweet}
+              onPost={() => postTweet(tweet)}
               isPosting={isPosting}
             />
-          )}
+          ))}
         </div>
       </Card>
     </main>

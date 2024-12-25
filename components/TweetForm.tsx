@@ -22,7 +22,7 @@ export function TweetForm({ onGenerate, isGenerating }: TweetFormProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="prompt" className="block text-sm font-medium mb-2">
-          What would you like to tweet about?
+          What would you like to tweets about?
         </label>
         <Textarea
           id="prompt"
