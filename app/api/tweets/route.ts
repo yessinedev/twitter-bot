@@ -1,3 +1,4 @@
+
 import twitterClient from "@/lib/twitter";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
@@ -24,8 +25,8 @@ export async function GET() {
   try {
     const tweets = await prisma.tweet.findMany({
       orderBy: [
-        { scheduledDate: "desc" }, // First, sort by scheduledDate
-        { scheduledTime: "desc" }, // Then, sort by scheduledTime within the same date
+        { scheduledDate: "desc" }, 
+        { scheduledTime: "desc" },
       ],
     });
     return NextResponse.json(tweets);

@@ -15,9 +15,8 @@ interface Tweet {
 
 export default function TweetsPage() {
   const [generatedContent, setGeneratedContent] = useState<Tweet[]>([]);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [isPosting, setIsPosting] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
   const { toast } = useToast();
 
   const generateTweet = async (prompt: string, count: number) => {
@@ -40,7 +39,7 @@ export default function TweetsPage() {
         title: "Tweet generated!",
         description: "Your tweet content has been generated successfully.",
       });
-    } catch (error: any) {
+    } catch (error : any) {
       console.error("Generate Tweet Error:", error);
       toast({
         title: "Error",

@@ -5,7 +5,7 @@ export async function POST(request: Request) {
   try {
     const { tweets } = await request.json();
     const savedTweets = await prisma.tweet.createMany({
-      data: tweets.map((content: any) => ({ content: content, })),
+      data: tweets.map((content: string) => ({ content: content, })),
     });
     return NextResponse.json({ savedTweets });
   } catch (error: any) {

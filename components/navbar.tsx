@@ -4,7 +4,6 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Twitter, PenTool, Calendar, BarChart2, Settings, User, Menu, X } from 'lucide-react'
+import { Twitter, PenTool, Calendar, BarChart2, Settings, User, Menu} from 'lucide-react'
 
 const navItems = [
   { name: 'Generate', href: '/generate', icon: PenTool },

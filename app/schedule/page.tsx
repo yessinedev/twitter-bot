@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Pencil, Trash2, Plus, Loader2 } from "lucide-react";
+import { Pencil, Plus, Loader2 } from "lucide-react";
 import { SavedTweetForm } from "@/components/SavedTweetForm";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -45,11 +45,7 @@ export default function TweetsPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchTweets();
-  }, []);
-
-  const fetchTweets = async () => {
+  const fetchTweets = useCallback(async () => {
     setIsLoading(true);
     try {
       const response = await fetch("/api/tweets");
@@ -66,7 +62,11 @@ export default function TweetsPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchTweets();
+  }, [fetchTweets]);
 
   const handleSaveTweet = async (tweet: Omit<Tweet, "id" | "status">) => {
     try {
@@ -187,9 +187,10 @@ export default function TweetsPage() {
                         {tweet.content}
                       </TableCell>
                       <TableCell>
-                        {format(new Date(tweet.scheduledDate), "PP")} - {format(new Date(tweet.scheduledTime), "p")}
+                        {format(new Date(tweet.scheduledDate), "PP")} -{" "}
+                        {format(new Date(tweet.scheduledTime), "p")}
                       </TableCell>
-                      
+
                       <TableCell>{getStatusBadge(tweet.status)}</TableCell>
                       <TableCell className="text-right">
                         <DropdownMenu>
