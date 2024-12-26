@@ -1,16 +1,14 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-interface RouteParams {
-  params: { id: string };
-}
+
 
 export async function DELETE(
   request: NextRequest,
-  { params }: RouteParams
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = parseInt(params.id); // Convert id to a number
+    const id = parseInt((await params).id);
     await prisma.tweet.delete({
       where: { id },
     });
