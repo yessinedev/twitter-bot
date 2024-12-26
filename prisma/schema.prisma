@@ -17,8 +17,8 @@ datasource db {
 model Tweet {
   id            Int      @id @default(autoincrement())
   content       String @db.VarChar(300)
-  // scheduledDate DateTime @default(null)
-  // scheduledTime DateTime
+  scheduledDate DateTime @default(now())
+  scheduledTime DateTime @default(now())
   status    Status   @default(DRAFT)
 }
 

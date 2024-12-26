@@ -20,6 +20,8 @@ export async function POST(req: NextRequest) {
     - Use an engaging tone (informative, humorous, or inspiring).
     - Include relevant hashtags
     - Be formatted as a numbered list (1 to ${count})
+    and avoid mentioning the category or subject directly. 
+   Do not include any headings or labels like "Next.js tip:" or "Developer motivation:". Each post should stand alone as engaging content.
     - Avoid links or placeholders for links.`
     );
 

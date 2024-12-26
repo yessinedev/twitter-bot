@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 interface Tweet {
     content: string;
     isChecked: boolean;
-  }
+}
 
 export default function TweetsPage() {
   const [generatedContent, setGeneratedContent] = useState<Tweet[]>([]);
