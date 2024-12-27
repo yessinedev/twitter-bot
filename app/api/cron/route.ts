@@ -9,10 +9,18 @@ export async function GET(request: NextRequest) {
       return new Response("Unauthorized", { status: 401 });
     }
 
+    // Get the start and end of the current day
     const now = new Date();
+    const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setDate(endOfDay.getDate() + 1);
+
     const scheduledTweets = await prisma.tweet.findMany({
       where: {
-        scheduledDate: now.toISOString().split("T")[0], // Matches today's date
+        scheduledDate: {
+          gte: startOfDay.toISOString(), // From start of day
+          lt: endOfDay.toISOString(),   // Until start of next day
+        },
         status: "SCHEDULED",
       },
       orderBy: {
